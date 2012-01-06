@@ -1,0 +1,38 @@
+This project contains my simple library to wrap the Microsoft assertion libraries in order to provide an expressive API for declaring unit-test assertions.
+
+This project is meant to be used in the Arrange/Act/Assert pattern, like in the following example:
+
+[TestMethod]
+public void TestCalculatorSum()
+{
+	// Arrange
+	Calculator target = new Calculator();
+	int expected = 4;
+	int result;
+	
+	// Act
+	result = target.Sum(2, 2);
+	
+	// Assert
+	Verify.That(result)
+		  .IsEqualTo(expected);
+		  .Now();
+}
+
+[TestMethod]
+public void TestCalculatorSum2()
+{
+	// Arrange
+	Calculator target = new Calculator();
+	int result;
+	
+	// Act
+	result = target.Sum(2, 2);
+	
+	// Assert
+	Verify.That(result)
+		  .IsLessThan(5)
+		  .And()
+		  .IsGreaterThan(3)
+		  .Now();
+}
