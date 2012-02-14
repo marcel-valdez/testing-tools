@@ -7,7 +7,7 @@ namespace TestingTools.Extensions
     public static class Method
     {
         /// <summary>
-        /// Tests tha a Func<typeparamref name="T" throws an exception./>
+        /// Tests tha a Func<typeparamref name="T"></typeparamref> throws an exception.
         /// </summary>
         /// <typeparam name="T">Return type</typeparam>
         /// <param name="function">The function.</param>
@@ -26,6 +26,33 @@ namespace TestingTools.Extensions
         /// <param name="action">The action.</param>
         /// <param name="message">The message.</param>
         public static IVerifiable<Action> ThrowsException(this IAssertion<Action> action, string message = "")
+        {
+            return new Verifiable<Action>(action, target =>
+            {
+                Assert.IsNotNull(target.GetThrownException(), message);
+            });
+        }
+
+        /// <summary>
+        /// Tests tha a Func<typeparamref name="T"/> does not throw an exception.
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="function">The function.</param>
+        /// <param name="message">The message.</param>
+        public static IVerifiable<Func<T>> DoesNotThrowException<T>(this IAssertion<Func<T>> function, string message = "")
+        {
+            return new Verifiable<Func<T>>(function, target =>
+                    Assert.IsNull(
+                        target.GetThrownException(),
+                        "La función no debió lanzar una excepción, pero sí lo hizo.\n" + message));
+        }
+
+        /// <summary>
+        /// Tests that an Action should not throw an exception
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="message">The message.</param>
+        public static IVerifiable<Action> DoesNotThrowException(this IAssertion<Action> action, string message = "")
         {
             return new Verifiable<Action>(action, target =>
             {
