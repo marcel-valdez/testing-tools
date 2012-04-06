@@ -7,34 +7,31 @@ namespace TestingTools.Core
 {
     internal class VerifiableOr<T> : IVerifiable<T>
     {
-        IVerifiable<T> mFirstPredicament;
-        IVerifiable<T> mSecondPredicament;
-        public VerifiableOr(IVerifiable<T> firstPredicament, IVerifiable<T> secondPredicament)
+        IVerifiable<T> mLeftPredicament;
+        IVerifiable<T> mRightPredicament;
+        public VerifiableOr(IVerifiable<T> leftPredicament, IVerifiable<T> rightPredicament)
         {
-            this.mFirstPredicament = firstPredicament;
-            this.mSecondPredicament = secondPredicament;
+            this.mLeftPredicament = leftPredicament;
+            this.mRightPredicament = rightPredicament;
         }
 
         #region IVerifiable<T> Members
         public void Now()
         {
-            Exception ex = null;
             try
             {
-                this.mFirstPredicament.Now();
+                this.mLeftPredicament.Now();
             }
-            catch (Exception x)
+            catch (Exception)
             {
-                ex = x;
-            }
-
-            if (ex == null)
-            {
-                this.mSecondPredicament.Now();
-            }
-            else
-            {
-                throw ex;
+                try
+                {
+                    this.mRightPredicament.Now();
+                }
+                catch (Exception)
+                {                    
+                    throw;
+                }
             }
         }
         #endregion
@@ -44,7 +41,7 @@ namespace TestingTools.Core
         {
             get
             {
-                return mFirstPredicament.Target;   
+                return mRightPredicament.Target;
             }
         }
         #endregion

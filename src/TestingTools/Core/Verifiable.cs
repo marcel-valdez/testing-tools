@@ -26,8 +26,6 @@ namespace TestingTools.Core
             this.mPredicate(this.mAssertion.Target);
         }
 
-
-
         #region IAssertion<T> Members
         /// <summary>
         /// Gets the target being tested.

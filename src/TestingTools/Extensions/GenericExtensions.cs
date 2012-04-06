@@ -118,5 +118,70 @@
             Contract.Requires(predicate != null, "predicate is null.");
             return new Verifiable<T>(actual, target => Assert.IsTrue(predicate(target)));
         }
+
+        /// <summary>
+        /// Allows the client to perform a verification on a member of the parent
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TMember">The type of the member.</typeparam>
+        /// <param name="parent">The parent.</param>
+        /// <param name="getter">The getter.</param>
+        /// <returns></returns>
+        public static Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> Member<T, TMember>(this IAssertion<T> parent, Func<TMember> getter)
+        {
+            Contract.Requires(getter != null, "getter must not be null");
+            Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> verificator =
+                memberVerification =>
+                    {
+                        Action<T> nexus = _ =>
+                            {
+                                var memberVerifiable = new Assertion<TMember>(getter());
+                                memberVerification(memberVerifiable)
+                                    .Now();
+                            };
+
+                        return new Verifiable<T>(parent, nexus);
+                    };
+
+            return verificator;
+        }
+
+        public static Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> Member<T, TMember>(this IAssertion<T> parent, TMember member)
+        {
+            Contract.Requires(member != null, "getter must not be null");
+            Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> verificator =
+                memberVerification =>
+                {
+                    Action<T> nexus = _ =>
+                    {
+                        var memberVerifiable = new Assertion<TMember>(member);
+                        memberVerification(memberVerifiable)
+                            .Now();
+                    };
+
+                    return new Verifiable<T>(parent, nexus);
+                };
+
+            return verificator;
+        }
+
+        public static Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> Member<T, TMember>(this IAssertion<T> parent, Func<T, TMember> getter)
+        {
+            Contract.Requires(getter != null, "getter must not be null");
+            Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> verificator =
+                memberVerification =>
+                {
+                    Action<T> nexus = parentTarget =>
+                    {
+                        var memberVerifiable = new Assertion<TMember>(getter(parentTarget));
+                        memberVerification(memberVerifiable)
+                            .Now();
+                    };
+
+                    return new Verifiable<T>(parent, nexus);
+                };
+
+            return verificator;
+        }
     }
 }

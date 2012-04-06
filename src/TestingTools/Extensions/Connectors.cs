@@ -1,6 +1,7 @@
 ﻿namespace TestingTools.Extensions
 {
     using TestingTools.Core;
+    using System;
 
     public static class Connectors
     {
@@ -22,9 +23,11 @@
         /// <param name="me">Target to be checked first</param>
         /// <param name="or">Target to be checked second</param>
         /// <returns></returns>
-        public static IVerifiable<T> Or<T>(this IVerifiable<T> me, IVerifiable<T> or)
+        public static IVerifiable<T> Or<T>(this IVerifiable<T> me, Func<IAssertion<T>, IVerifiable<T>> or)
         {
-            return new VerifiableOr<T>(me, or);
+            var assertable = new Assertion<T>(me.Target);
+            var verifiable = or(assertable);
+            return new VerifiableOr<T>(me, verifiable);
         }
     }
 }
