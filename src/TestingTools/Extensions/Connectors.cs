@@ -17,6 +17,17 @@
         }
 
         /// <summary>
+        /// Appends a verification
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual">The actual.</param>
+        /// <returns></returns>
+        public static IAssertion<TTarget> And<T, TTarget>(this IVerifiable<T> actual, TTarget target)
+        {
+            return new AndConnector<TTarget, T>(actual, target);
+        }
+
+        /// <summary>
         /// Allows for either Verification to cause a valid assertion
         /// </summary>
         /// <typeparam name="T">Type of the target</typeparam>

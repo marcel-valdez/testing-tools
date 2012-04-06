@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AndConnector.cs" />
     <Compile Include="Core\IAssertion.cs" />
     <Compile Include="Core\IVerifiable.cs" />
     <Compile Include="Core\OrVerifiable.cs" />

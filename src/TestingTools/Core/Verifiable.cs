@@ -16,7 +16,7 @@ namespace TestingTools.Core
         /// <summary>
         /// Ejecuta todos los predicados encadenados, empezando por el primero, hasta el último.
         /// </summary>
-        public void Now()
+        public virtual void Now()
         {
             if (this.mAssertion is IVerifiable<T>)
             {
@@ -30,7 +30,7 @@ namespace TestingTools.Core
         /// <summary>
         /// Gets the target being tested.
         /// </summary>
-        public T Target
+        public virtual T Target
         {
             get
             {
