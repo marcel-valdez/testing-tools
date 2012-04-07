@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="Core\AndConnector.cs" />
     <Compile Include="Core\IAssertion.cs" />
+    <Compile Include="Core\ICommandable.cs" />
+    <Compile Include="Core\Its.cs" />
+    <Compile Include="Core\ItsAssertable.cs" />
     <Compile Include="Core\IVerifiable.cs" />
     <Compile Include="Core\OrVerifiable.cs" />
     <Compile Include="Core\Verifiable.cs" />

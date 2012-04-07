@@ -221,18 +221,18 @@
         }
     }
 
-    class Parent
+    public class Parent
     {
-        public Child Child
+        public virtual Child Child
         {
             get;
             set;
         }
     }
 
-    class Child
+    public class Child
     {
-        public string Data
+        public virtual string Data
         {
             get;
             set;

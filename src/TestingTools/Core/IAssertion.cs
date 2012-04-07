@@ -1,6 +1,6 @@
 namespace TestingTools.Core
 {
-    public interface IAssertion<T>
+    public interface IAssertion<T> 
     {
         T Target
         {

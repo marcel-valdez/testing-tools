@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TestingTools.Core
 {
-    internal class VerifiableOr<T> : IVerifiable<T>
+    internal class VerifiableOr<T> : IVerifiable<T>, ICommandable
     {
         IVerifiable<T> mLeftPredicament;
         IVerifiable<T> mRightPredicament;
@@ -42,6 +42,23 @@ namespace TestingTools.Core
             get
             {
                 return mRightPredicament.Target;
+            }
+        }
+        #endregion
+
+        #region ICommandable Members
+
+        public void Command(object command)
+        {
+            if (this.mLeftPredicament is ICommandable)
+            {
+                (this.mLeftPredicament as ICommandable).Command(command);
+            }
+
+            if (this.mRightPredicament is ICommandable)
+            {
+
+                (this.mRightPredicament as ICommandable).Command(command);
             }
         }
         #endregion

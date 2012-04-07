@@ -6,8 +6,7 @@
     using TestingTools.Core;
     using Moq;
     using Fasterflect;
-
-
+    using Helpers;
 
     /// <summary>
     ///This is a test class for ConnectorsTest and is intended
@@ -63,6 +62,48 @@
         //}
         //
         #endregion
+
+        [TestMethod]
+        public void TestIfAndCanConnectAItsAssertable()
+        {
+            // Arrange
+            var parentMock = new Mock<Parent>();
+            var childMock = new Mock<Child>();
+            var mockAssertion = new Mock<IAssertion<Parent>>();
+            mockAssertion.SetupGet(m => m.Target).Returns(parentMock.Object);
+            parentMock.SetupGet(p => p.Child).Returns(childMock.Object);
+            var parentAssertion = new StubVerifiable<Parent>(
+                                    new Verifiable<Parent>(
+                                        mockAssertion.Object,
+                                        _ =>
+                                        {
+                                        }));
+
+            bool rootMemberAssertionCalled = false;
+            // Act
+            parentAssertion
+                .And(
+                    Its<Parent>
+                    .Member(p => p.Child)
+                    .IsEqualTo(childMock.Object))
+                    .And()
+                    .ItsTrueThat(
+                    _ =>
+                    {
+                        rootMemberAssertionCalled = true;
+                        return true;
+                    })
+                    .And()
+
+                .Now();
+
+            // Assert
+            Assert.IsTrue(rootMemberAssertionCalled);
+            Assert.IsTrue(parentAssertion.NowCalled);
+            Assert.IsTrue(parentAssertion.TargetGetCalled);
+            mockAssertion.Verify(m => m.Target, Times.AtLeastOnce());
+            parentMock.VerifyGet(p => p.Child, Times.AtLeastOnce());
+        }
 
         /// <summary>
         /// Tests if And(Target) can connect a predicament.
@@ -218,50 +259,6 @@
             Assert.IsTrue(left.NowCalled, "No se mandó llamar Now()");
             Assert.IsFalse(rightPredicamentCalled, "No se debió mandar llamar el segundo Target_get(), pues ya debió fallar el primero");
             Assert.IsNotNull(ex);
-        }
-
-        internal class StubVerifiable<T> : IVerifiable<T>
-        {
-            IVerifiable<T> mInner;
-            public StubVerifiable(IVerifiable<T> inner)
-            {
-                this.mInner = inner;
-            }
-
-            public bool NowCalled
-            {
-                get;
-                set;
-            }
-
-            public bool TargetGetCalled
-            {
-                get;
-                set;
-            }
-
-            public virtual void Now()
-            {
-                NowCalled = true;
-                mInner.Now();
-            }
-
-            public virtual T Target
-            {
-                get
-                {
-                    TargetGetCalled = true;
-                    return mInner.Target;
-                }
-            }
-        }
-
-        internal class MockVerifiable<T> : StubVerifiable<T>
-        {
-            internal MockVerifiable(IVerifiable<T> inner)
-                : base(inner)
-            {
-            }
         }
     }
 }

@@ -57,9 +57,13 @@
   <ItemGroup>
     <Compile Include="AndConnectorTest.cs" />
     <Compile Include="ConnectorsTest.cs" />
+    <Compile Include="ItsAssertableTest.cs" />
+    <Compile Include="Helpers\MockVerifiable.cs" />
     <Compile Include="OrVerifiableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MemberAssertionTests.cs" />
+    <Compile Include="Helpers\StubVerifiable.cs" />
+    <Compile Include="VerifiableTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestingTools\TestingTools.csproj">

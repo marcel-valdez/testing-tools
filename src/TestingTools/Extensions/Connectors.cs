@@ -16,6 +16,29 @@
             return actual;
         }
 
+
+        /// <summary>
+        /// Appends the specified member verification.
+        /// </summary>
+        /// <typeparam name="T">Type of parent</typeparam>
+        /// <typeparam name="TMember">The type of the member.</typeparam>
+        /// <param name="actual">The parent verification.</param>
+        /// <param name="memberVerification">The member verification.</param>
+        /// <returns></returns>
+        public static IVerifiable<T> And<T, TMember>(this IVerifiable<T> actual, IVerifiable<TMember> memberVerification)
+        {
+            return new Verifiable<T>(actual, target =>
+            {
+                if (memberVerification is ICommandable)
+                {
+                    (memberVerification as ICommandable).Command(target);
+                }
+
+                memberVerification.Now();
+            });
+
+        }
+
         /// <summary>
         /// Appends a verification
         /// </summary>

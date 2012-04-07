@@ -2,7 +2,7 @@ namespace TestingTools.Core
 {
     using System;
 
-    internal class Verifiable<T> : IVerifiable<T>
+    internal class Verifiable<T> : IVerifiable<T>, ICommandable
     {
         private IAssertion<T> mAssertion;
         private Action<T> mPredicate;
@@ -35,6 +35,17 @@ namespace TestingTools.Core
             get
             {
                 return this.mAssertion.Target;
+            }
+        }
+        #endregion
+
+        #region ICommandable Members
+
+        public void Command(object command)
+        {
+            if (this.mAssertion is ICommandable)
+            {
+                (this.mAssertion as ICommandable).Command(command);
             }
         }
         #endregion

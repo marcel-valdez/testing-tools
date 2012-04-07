@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TestingTools.Core
 {
-    internal class AndConnector<TRight, TLeft> : IAssertion<TRight>, IVerifiable<TRight>
+    internal class AndConnector<TRight, TLeft> : IAssertion<TRight>, IVerifiable<TRight>, ICommandable
     {
         private IVerifiable<TLeft> mLeftPredicament;
         private TRight mTarget;
@@ -33,6 +33,18 @@ namespace TestingTools.Core
                 return this.mTarget;
             }
         }
+        #endregion
+
+        #region ICommandable Members
+
+        public void Command(object command)
+        {
+            if (this.mLeftPredicament is ICommandable)
+            {
+                (this.mLeftPredicament as ICommandable).Command(command);
+            }
+        }
+
         #endregion
     }
 }
