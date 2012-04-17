@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndConnectorTest.cs" />
+    <Compile Include="CollectionExtensionsTest.cs" />
     <Compile Include="ConnectorsTest.cs" />
     <Compile Include="ItsAssertableTest.cs" />
     <Compile Include="Helpers\MockVerifiable.cs" />

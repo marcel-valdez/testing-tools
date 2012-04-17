@@ -14,7 +14,7 @@ namespace TestingTools.Extensions
             return new Verifiable<IEnumerable<T>>(collection, target =>
                 Verify.That(target).IsNotNull()
                 .And()
-                .ItsTrueThat(col => col.Count() == 0)
+                    .ItsTrueThat(col => col.Count() == 0)
                 .Now());
         }
 
@@ -23,7 +23,7 @@ namespace TestingTools.Extensions
             return new Verifiable<IEnumerable<T>>(collection, target =>
                     Verify.That(target).IsNotNull(message)
                     .And()
-                    .ItsTrueThat(col => col.Count() == 0, message)
+                        .ItsTrueThat(col => col.Count() == 0, message)
                     .Now());
         }
 
@@ -32,17 +32,17 @@ namespace TestingTools.Extensions
             return new Verifiable<IEnumerable<T>>(collection, target =>
                 Verify.That(target).IsNotNull()
                 .And()
-                .ItsTrueThat(col => col.Count() > 0)
+                    .ItsTrueThat(col => col.Count() > 0)
                 .Now());
         }
 
         public static IVerifiable<IEnumerable<T>> IsNotEmpty<T>(this IAssertion<IEnumerable<T>> collection, string message)
         {
             return new Verifiable<IEnumerable<T>>(collection, target =>
-            
+
                 Verify.That(target).IsNotNull(message)
                 .And()
-                .ItsTrueThat(col => col.Count() > 0, message)
+                    .ItsTrueThat(col => col.Count() > 0, message)
                 .Now());
         }
 
@@ -69,10 +69,12 @@ namespace TestingTools.Extensions
                         }
                     }
 
-                    Verify.That(found).IsTrue(string.Format("The <{0}> should have contained: <{1}>. {2}",
+                    Verify.That(found)
+                          .IsTrue(string.Format("The <{0}> should have contained: <{1}>. {2}",
                                         (target ?? "NULL"),
                                         (expected ?? "NULL"),
-                                        (message ?? string.Empty))).Now();
+                                        (message ?? string.Empty)))
+                          .Now();
                 });
         }
 
@@ -84,7 +86,7 @@ namespace TestingTools.Extensions
         public static IVerifiable<IEnumerable<T>> DoesContain<T>(this IAssertion<IEnumerable<T>> list, T expected, string message)
         {
 
-            return new Verifiable<IEnumerable<T>>(list, 
+            return new Verifiable<IEnumerable<T>>(list,
                 target => Verify.That(target.Contains(expected))
                           .IsTrue(string.Format("The <{0}> should have contained: <{1}>. {2}",
                                     (list.ToString() ?? "NULL"),
@@ -115,7 +117,7 @@ namespace TestingTools.Extensions
                                             (target ?? "NULL"),
                                             (expected ?? "NULL"),
                                             (message ?? string.Empty)))
-                                            .Now();
+                        .Now();
                 });
         }
 
@@ -129,10 +131,11 @@ namespace TestingTools.Extensions
             return new Verifiable<IEnumerable<T>>(list, target =>
                 Verify.That(target.Contains(expected))
                       .IsFalse(string.Format(
-                        "The <{0}> should not have contained: <{1}>. {2}",
-                        (list.ToString() ?? "NULL"),
-                        (expected.ToString() ?? "NULL"),
-                        (message ?? string.Empty))).Now());
+                            "The <{0}> should not have contained: <{1}>. {2}",
+                            (list.ToString() ?? "NULL"),
+                            (expected.ToString() ?? "NULL"),
+                            (message ?? string.Empty)))
+                        .Now());
         }
 
         /// <summary>
@@ -144,8 +147,21 @@ namespace TestingTools.Extensions
         public static IVerifiable<IEnumerable<T>> IsTrueForAll<T>(this IAssertion<IEnumerable<T>> list, Predicate<T> evaluator, string message = "")
         {
             return new Verifiable<IEnumerable<T>>(list, target =>
-                Verify.That(target.ToList().TrueForAll(evaluator))
-                .IsTrue(message));
+                {
+                    bool result = false;
+                    foreach(T item in target)
+                    {
+                        result = evaluator(item);
+                        if (!result)
+                        {
+                            break;
+                        }
+                    }
+
+                    Verify.That(result)
+                          .IsTrue(message)
+                          .Now();
+                });
         }
 
         /// <summary>
@@ -156,8 +172,7 @@ namespace TestingTools.Extensions
         /// <param name="evaluator">The evaluator.</param>
         public static IVerifiable<IEnumerable<T>> IsFalseForAll<T>(this IAssertion<IEnumerable<T>> list, Predicate<T> evaluator, string message = "")
         {
-            return new Verifiable<IEnumerable<T>>(list, target =>
-                Verify.That(target.ToList().TrueForAll(t => !evaluator(t))).IsTrue(message));
+            return list.IsTrueForAll(value => !evaluator(value), message);
         }
 
         /// <summary>
@@ -169,8 +184,10 @@ namespace TestingTools.Extensions
         public static IVerifiable<IEnumerable<T>> IsTrueForAny<T>(this IAssertion<IEnumerable<T>> list, Predicate<T> evaluator, string message = "")
         {
             return new Verifiable<IEnumerable<T>>(list, target =>
-                Verify.That(target.Any(t => evaluator(t)))
-                      .IsTrue(message));
+                Verify.That(
+                target.Any(t => evaluator(t)))
+                      .IsTrue(message)
+                      .Now());
         }
 
         /// <summary>
@@ -188,7 +205,7 @@ namespace TestingTools.Extensions
         {
             return new Verifiable<IEnumerable<T>>(list, target =>
             Assert.AreEqual(elementCount, target.Count(), string.Format("Number of elements should be: {0}", elementCount)));
-            
+
         }
 
         public static IVerifiable<IEnumerable<T>> HasLessThan<T>(this IAssertion<IEnumerable<T>> list, int elementCount)
@@ -197,9 +214,9 @@ namespace TestingTools.Extensions
             return new Verifiable<IEnumerable<T>>(list, target =>
                 Verify.That(listCount < elementCount)
                       .IsTrue(
-                        string.Format("Number of elements should be less than: {0} but was {1}",
-                        elementCount,
-                        listCount))
+                            string.Format("Number of elements should be less than: {0} but was {1}",
+                            elementCount,
+                            listCount))
                        .Now());
         }
 
