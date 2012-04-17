@@ -149,13 +149,17 @@ namespace TestingTools.Extensions
             return new Verifiable<IEnumerable<T>>(list, target =>
                 {
                     bool result = false;
+                    int index = 0;
                     foreach(T item in target)
                     {
                         result = evaluator(item);
                         if (!result)
                         {
+                            message = "Item at index: " + index + " did not comply with condition.\n" + message;
                             break;
                         }
+
+                        index++;
                     }
 
                     Verify.That(result)
