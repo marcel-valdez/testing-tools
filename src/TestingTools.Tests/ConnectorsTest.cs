@@ -1,7 +1,7 @@
 ﻿namespace TestingTools.Tests
 {
     using TestingTools.Extensions;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using System;
     using TestingTools.Core;
     using Moq;
@@ -12,7 +12,7 @@
     ///This is a test class for ConnectorsTest and is intended
     ///to contain all ConnectorsTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class ConnectorsTest
     {
         private TestContext testContextInstance;
@@ -63,7 +63,7 @@
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestIfAndCanConnectAItsAssertable()
         {
             // Arrange
@@ -108,7 +108,7 @@
         /// <summary>
         /// Tests if And(Target) can connect a predicament.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfAndCanConnectAPredicament()
         {
             // Arrange
@@ -119,7 +119,7 @@
             var result = mock.And(connected);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(AndConnector<object, string>));
+            Assert.IsInstanceOfType(typeof(AndConnector<object, string>), result);
             Assert.AreEqual(result.GetFieldValue("mLeftPredicament"), mock);
             Assert.AreEqual(result.Target, connected);
         }
@@ -127,7 +127,7 @@
         /// <summary>
         /// Tests if Now() chains the Now() calls and redirects the Target.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfAnd_NowChainsTheNowCallsAndRedirectsTheTarget()
         {
             // Arrange
@@ -150,7 +150,7 @@
         /// <summary>
         /// Tests if a And() then Now() calls connects to two valid predicaments.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfAnd_NowConnectsToTwoValidPredicaments()
         {
             // Arrange
@@ -185,7 +185,7 @@
         /// <summary>
         /// Tests if And() - Now() connects an invalid right predicament.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfAnd_NowConnectsAnInvalidRightPredicament()
         {
             // Arrange
@@ -226,7 +226,7 @@
         /// <summary>
         /// Tests if and_ now connects an invalid left predicament.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfAnd_NowConnectsAnInvalidLeftPredicament()
         {
             // Arrange

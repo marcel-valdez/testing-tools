@@ -4,14 +4,14 @@
     using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Core;
     using Extensions;
 
     /// <summary>
     /// Summary description for OrVerifiableTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class OrVerifiableTests
     {
         public OrVerifiableTests()
@@ -61,7 +61,7 @@
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyATrueOrAssertionOnInnerPredicament()
         {
             // Arrange
@@ -77,7 +77,7 @@
             // Empty
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyAFailingOrAssertionWithInnerPredicament()
         {
             // Arrange
@@ -101,7 +101,7 @@
             Assert.IsNotNull(expected);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyAValidOrAssertionWithOuterPredicament()
         {
             // Arrange

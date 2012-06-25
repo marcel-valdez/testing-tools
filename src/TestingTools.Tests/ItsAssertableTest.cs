@@ -1,17 +1,16 @@
-﻿using TestingTools.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using Moq;
-using Fasterflect;
-namespace TestingTools.Tests
+﻿namespace TestingTools.Tests
 {
-    
+    using TestingTools.Core;
+    using System;
+    using Moq;
+    using Fasterflect;
+    using NUnit.Framework;
     
     /// <summary>
     ///This is a test class for ItsAssertableTest and is intended
     ///to contain all ItsAssertableTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class ItsAssertableTest
     {
 
@@ -68,7 +67,7 @@ namespace TestingTools.Tests
         /// <summary>
         /// Tests if on target get it uses the func on the parent field.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfOnTargetGetItUsesTheFuncOnTheParentField()
         {
             // Arrange
@@ -87,7 +86,7 @@ namespace TestingTools.Tests
         /// <summary>
         /// Tests if it sets parent field on command when it matches the parent type.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfItSetsParentFieldOnCommandWhenItMatchesTheParentType()
         {
             // Arrange
@@ -104,7 +103,7 @@ namespace TestingTools.Tests
         /// <summary>
         /// Tests if it ignores the command when it doesnt match the parent.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfIgnoresTheCommandWhenItDoesntMatchTheParentType()
         {
             // Arrange

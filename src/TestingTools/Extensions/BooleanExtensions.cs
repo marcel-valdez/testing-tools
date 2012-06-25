@@ -1,6 +1,6 @@
 ﻿namespace TestingTools.Extensions
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using TestingTools.Core;
 
     public static class BooleanExtensions

@@ -2,7 +2,7 @@ namespace TestingTools.Extensions
 {
     using System;
     using System.Diagnostics.Contracts;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using TestingTools.Core;
 
     public static class ObjectExtensions

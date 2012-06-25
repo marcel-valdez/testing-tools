@@ -1,7 +1,7 @@
 ﻿namespace TestingTools.Tests
 {
     using TestingTools.Extensions;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using System;
     using System.Collections.Generic;
     using TestingTools.Core;
@@ -12,10 +12,10 @@
     ///This is a test class for CollectionExtensionsTest and is intended
     ///to contain all CollectionExtensionsTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class CollectionExtensionsTest
     {
-        [TestMethod()]
+        [Test]
         public void TestIfTrueForAllFailsWhenNoItemsInCollection()
         {
             // Arrange
@@ -29,7 +29,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTrueForAllFailsWhenSizeIsOneAndItsFalse()
         {
             // Arrange
@@ -43,7 +43,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTrueForAllIsPassesWhenSizeIsOneAndItsTrue()
         {
             // Arrange
@@ -57,7 +57,7 @@
             Assert.IsNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTrueForAllPassesWhenSizeIsMoreThanOneAndAllAreTrue()
         {
             // Arrange
@@ -71,7 +71,7 @@
             Assert.IsNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTrueForAllFailsWhenSizeIsMoreThanOneAndFirstIsFalse()
         {
             // Arrange
@@ -85,7 +85,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTrueForAllFailsWhenSizeIsMoreThanOneAndLastIsFalse()
         {
             // Arrange
@@ -99,7 +99,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTrueForAllFailsWhenSizeIsMoreThanTwoAndMiddleIsFalse()
         {
             // Arrange
@@ -114,7 +114,7 @@
         }
 
 
-        [TestMethod()]
+        [Test()]
         public void TestIfIsTrueForAnyFailsWhenCollectionIsEmpty()
         {
             // Arrange
@@ -127,7 +127,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfIsTrueForAnyFailsWhenSizeIsOneAndItsFalse()
         {
             // Arrange
@@ -140,7 +140,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfIsTrueForAnyFailsWhenSizeIsOneAndItsTrue()
         {
             // Arrange
@@ -153,7 +153,7 @@
             Assert.IsNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfIsTrueForAnyFailsWhenSizeIsMoreThanOneAndAllAreFalse()
         {
             // Arrange
@@ -166,7 +166,7 @@
             Assert.IsNotNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfIsTrueForAnyPassesWhenSizeIsMoreThanOneAndOnlyFirstIsTrue()
         {
             // Arrange
@@ -180,7 +180,7 @@
         }
 
 
-        [TestMethod]
+        [Test]
         public void TestIfIsTrueForAnyPassesWhenSizeIsMoreThanOneAndOnlyLastIsTrue()
         {
             // Arrange
@@ -193,7 +193,7 @@
             Assert.IsNull(x);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfIfIsTrueForAnyPassesWhenSizeIsMoreThanTwoAndOnlyMiddleIsTrue()
         {
             // Arrange

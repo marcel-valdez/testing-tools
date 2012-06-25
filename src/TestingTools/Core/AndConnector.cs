@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TestingTools.Core
+﻿namespace TestingTools.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     internal class AndConnector<TRight, TLeft> : IAssertion<TRight>, IVerifiable<TRight>, ICommandable
     {
         private IVerifiable<TLeft> mLeftPredicament;

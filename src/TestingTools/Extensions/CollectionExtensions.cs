@@ -4,7 +4,7 @@ namespace TestingTools.Extensions
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using TestingTools.Core;
 
     public static class CollectionExtensions

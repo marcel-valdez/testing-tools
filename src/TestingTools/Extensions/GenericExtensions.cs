@@ -2,7 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using TestingTools.Core;
 
     public static class GenericExtensions
@@ -29,22 +29,22 @@
 
         public static IVerifiable<T> IsOfType<T>(this IAssertion<T> actual, Type type)
         {
-            return new Verifiable<T>(actual, target => Assert.IsInstanceOfType(target, type));
+            return new Verifiable<T>(actual, target => Assert.IsInstanceOfType(type, target));
         }
 
         public static IVerifiable<T> IsOfType<T>(this IAssertion<T> actual, Type type, string message)
         {
-            return new Verifiable<T>(actual, target => Assert.IsInstanceOfType(target, type, message));
+            return new Verifiable<T>(actual, target => Assert.IsInstanceOfType(type, target, message));
         }
 
         public static IVerifiable<T> IsNotOfType<T>(this IAssertion<T> actual, Type type, string message)
         {
-            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOfType(target, type, message));
+            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOfType(type, target, message));
         }
 
         public static IVerifiable<T> IsNotOfType<T>(this IAssertion<T> actual, Type type)
         {
-            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOfType(target, type));
+            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOfType(type, target));
         }
 
         public static IVerifiable<T> IsNotNull<T>(this IAssertion<T> actual, string message = "")

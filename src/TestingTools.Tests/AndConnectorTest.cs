@@ -1,7 +1,7 @@
 ﻿namespace TestingTools.Tests
 {
     using TestingTools.Core;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using System;
     using Moq;
     using Fasterflect;
@@ -11,7 +11,7 @@
     ///This is a test class for AndConnectorTest and is intended
     ///to contain all AndConnectorTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class AndConnectorTest
     {
 
@@ -64,7 +64,7 @@
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestIfConstructorSetupsFields()
         {
             // Arrange
@@ -79,7 +79,7 @@
             Assert.AreEqual(target.GetFieldValue("mTarget"), verified);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTargetIsCorrectlyConnected()
         {
             // Arrange
@@ -93,7 +93,7 @@
             Assert.AreEqual(target.Target, verified);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfTestIfNowCallsLeftPredicament()
         {
             // Arrange

@@ -4,14 +4,14 @@
     using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Core;
     using Extensions;
 
-    [TestClass]
+    [TestFixture]
     public class MemberAssertionTests
     {
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyATrueAssertionOfAMemberFunc()
         {
             // Arrange
@@ -30,7 +30,7 @@
             Assert.IsTrue(true);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyATrueAssertionOfAMemberOfAnObject()
         {
             // Arrange
@@ -50,7 +50,7 @@
         }
 
 
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyATrueAssertionOfAMemberGetter()
         {
             // Arrange
@@ -72,7 +72,7 @@
         /// <summary>
         /// Tests if can verify A failing assertion of A member func of an object.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyAFailingAssertionOfAMemberFuncOfAnObject()
         {
             // Arrange
@@ -102,7 +102,7 @@
         /// <summary>
         /// Tests if can verify A failing assertion of A member of an object.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyAFailingAssertionOfAMemberOfAnObject()
         {
             // Arrange
@@ -133,7 +133,7 @@
         /// <summary>
         /// Tests if can verify A failing assertion of A member getter.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfCanVerifyAFailingAssertionOfAMemberGetter()
         {
             // Arrange
@@ -163,7 +163,7 @@
         /// <summary>
         /// Tests if can recursively do A true assertion.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfCanRecursivelyDoATrueAssertion()
         {
             // Arrange
@@ -190,7 +190,7 @@
         /// <summary>
         /// Tests if can recursively do A failing assertion.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestIfCanRecursivelyDoAFailingAssertion()
         {
             // Arrange

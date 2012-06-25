@@ -1,7 +1,7 @@
 ﻿namespace TestingTools.Tests
 {
     using TestingTools.Core;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using System;
     
     
@@ -9,7 +9,7 @@
     ///This is a test class for VerifiableTest and is intended
     ///to contain all VerifiableTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class VerifiableTest
     {
 
@@ -63,7 +63,7 @@
         #endregion
 
 
-        [TestMethod]
+        [Test]
         public void TestIfItRecursivelyCallsCommand()
         {
             // Arrange
@@ -86,7 +86,7 @@
             Assert.IsFalse(root.TargetGetCalled);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIfItDoesntTryToCommandANonCommandable()
         {
             // Arrange
