@@ -3,7 +3,7 @@ This project contains my simple library to wrap the NUnit (extensible to MSTest)
 
 This project is meant to be used in the Arrange/Act/Assert pattern, like in the following example:
 `````csharp
-[TestMethod]
+[Test]
 public void TestCalculatorSum()
 {
 	// Arrange
@@ -20,7 +20,7 @@ public void TestCalculatorSum()
 		  .Now();
 }
 
-[TestMethod]
+[Test]
 public void TestCalculatorSum2()
 {
 	// Arrange
