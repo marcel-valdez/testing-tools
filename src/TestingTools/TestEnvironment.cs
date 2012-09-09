@@ -16,11 +16,15 @@ namespace TestingTools
 		/// <param name="filename">The filename without path</param>
 		public static string GetExecutionFilepath(string filename, TestContext testContext = null)
 		{
+			if (FileExists(filename))
+			{
+				return filename;
+			}
+				
 			if (testContext != null)
 			{
-
                 string deploymentPath = testContext.TestDirectory + "/" + filename;
-				if (FileExists(filename))
+				if (FileExists(deploymentPath))
 				{
 					return deploymentPath;
 				}
