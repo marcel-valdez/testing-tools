@@ -1,8 +1,8 @@
-`````csharp
+
 This project contains my simple library to wrap the NUnit (extensible to MSTest) assertion libraries in order to provide an expressive API for declaring unit-test assertions.
 
 This project is meant to be used in the Arrange/Act/Assert pattern, like in the following example:
-
+`````csharp
 [TestMethod]
 public void TestCalculatorSum()
 {
