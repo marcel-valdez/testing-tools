@@ -1,6 +1,6 @@
-
 #ignore thumbnails created by windows
 Thumbs.db
+**/*/Thumbs.db
 #Ignore files build by Visual Studio
 *.obj
 *.exe
@@ -28,3 +28,4 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 src/packages/*
+src/TestingTools.ncrunchsolution

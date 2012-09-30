@@ -16,6 +16,39 @@
     public class CollectionExtensionsTest
     {
         [Test]
+        public void TestIfItCanCompareTwoListsWithoutOrder()
+        {
+            // Arrange
+            var actualNames = new string[] { "a", "b", "c" };
+            var expectedNames = new string[] { "c", "a", "b" };
+            IAssertion<IEnumerable<string>> assertion = Verify.That(actualNames);
+
+            // Act
+            TestDelegate act = () => assertion.ContainsAll(expectedNames).Now();
+
+            // Assert
+            Assert.DoesNotThrow(act);
+        }
+
+        /// <summary>
+        /// Tests if it can fail when a list does not contail all expected elements.
+        /// </summary>        
+        [Test]
+        public void TestIfItCanFailWhenAListDoesNotContailAllExpectedElements()
+        {
+            // Arrange
+            var actualNames = new string[] { "a", "b" };
+            var expectedNames = new string[] { "c", "a", "b" };
+            IAssertion<IEnumerable<string>> assertion = Verify.That(actualNames);
+
+            // Act
+            TestDelegate act = () => assertion.ContainsAll(expectedNames).Now();
+
+            // Assert
+            Assert.Throws<AssertionException>(act);
+        }
+
+        [Test]
         public void TestIfTrueForAllFailsWhenNoItemsInCollection()
         {
             // Arrange

@@ -1,7 +1,14 @@
 ﻿namespace TestingTools.Core
 {
+    using System.Collections.Generic;
+
     public static class Verify
     {
+        public static IAssertion<IEnumerable<T>> That<T>(T[] target)
+        {
+            return new Assertion<IEnumerable<T>>(target);
+        }
+
         public static IAssertion<T> That<T>(T target)
         {
             return new Assertion<T>(target);

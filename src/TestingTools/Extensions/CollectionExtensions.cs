@@ -9,34 +9,17 @@ namespace TestingTools.Extensions
 
     public static class CollectionExtensions
     {
-        public static IVerifiable<IEnumerable<T>> IsEmpty<T>(this IAssertion<IEnumerable<T>> collection)
-        {
-            return new Verifiable<IEnumerable<T>>(collection, target =>
-                Verify.That(target).IsNotNull()
-                .And()
-                    .ItsTrueThat(col => col.Count() == 0)
-                .Now());
-        }
-
-        public static IVerifiable<IEnumerable<T>> IsEmpty<T>(this IAssertion<IEnumerable<T>> collection, string message)
+        public static IVerifiable<IEnumerable<T>> IsEmpty<T>(this IAssertion<IEnumerable<T>> collection, string message = "")
         {
             return new Verifiable<IEnumerable<T>>(collection, target =>
                     Verify.That(target).IsNotNull(message)
                     .And()
-                        .ItsTrueThat(col => col.Count() == 0, message)
+                        .ItsTrueThat(col => col.Count() == 0,
+                                String.Format("The collection was not empty. It has {0} elements.\n{0}", target.Count(), message))
                     .Now());
         }
 
-        public static IVerifiable<IEnumerable<T>> IsNotEmpty<T>(this IAssertion<IEnumerable<T>> collection)
-        {
-            return new Verifiable<IEnumerable<T>>(collection, target =>
-                Verify.That(target).IsNotNull()
-                .And()
-                    .ItsTrueThat(col => col.Count() > 0)
-                .Now());
-        }
-
-        public static IVerifiable<IEnumerable<T>> IsNotEmpty<T>(this IAssertion<IEnumerable<T>> collection, string message)
+        public static IVerifiable<IEnumerable<T>> IsNotEmpty<T>(this IAssertion<IEnumerable<T>> collection, string message = "")
         {
             return new Verifiable<IEnumerable<T>>(collection, target =>
 
@@ -46,12 +29,28 @@ namespace TestingTools.Extensions
                 .Now());
         }
 
-        public static IVerifiable<IEnumerable> DoesContain(this IAssertion<IEnumerable> list, object expected)
+        public static IVerifiable<IEnumerable<T>> ContainsAll<T>(this IAssertion<IEnumerable<T>> assertion, IEnumerable<T> expected, string message = "")
         {
-            return list.DoesContain(expected, null);
+            T[] localExpected = expected.ToArray();
+            return new Verifiable<IEnumerable<T>>(assertion, target =>
+            {
+                if (assertion != null)
+                {
+                    foreach (T expectedItem in localExpected)
+                    {
+                        Verify.That(target)
+                            .DoesContain(expectedItem, message)
+                            .Now();
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException("Called with a null assertion!");
+                }
+            });
         }
 
-        public static IVerifiable<IEnumerable> DoesContain(this IAssertion<IEnumerable> list, object expected, string message)
+        public static IVerifiable<IEnumerable> DoesContain(this IAssertion<IEnumerable> list, object expected, string message = "")
         {
             return new Verifiable<IEnumerable>(list, target =>
                 {
@@ -78,39 +77,36 @@ namespace TestingTools.Extensions
                 });
         }
 
-        public static IVerifiable<IEnumerable<T>> DoesContain<T>(this IAssertion<IEnumerable<T>> list, T expected)
-        {
-            return new Verifiable<IEnumerable<T>>(list, target => Verify.That(target.Contains(expected)).IsTrue().Now());
-        }
-
-        public static IVerifiable<IEnumerable<T>> DoesContain<T>(this IAssertion<IEnumerable<T>> list, T expected, string message)
+        public static IVerifiable<IEnumerable<T>> DoesContain<T>(this IAssertion<IEnumerable<T>> assertion, T expected, string message = "")
         {
 
-            return new Verifiable<IEnumerable<T>>(list,
+            return new Verifiable<IEnumerable<T>>(assertion,
                 target => Verify.That(target.Contains(expected))
                           .IsTrue(string.Format("The <{0}> should have contained: <{1}>. {2}",
-                                    (list.ToString() ?? "NULL"),
-                                    (expected.ToString() ?? "NULL"),
+                                    (target != null ? target.ToString() : "NULL"),
+                                    (expected != null ? expected.ToString() : "NULL"),
                                     (message ?? string.Empty)))
                           .Now());
-        }
+        }        
 
-        public static IVerifiable<IEnumerable> DoesNotContain(this IAssertion<IEnumerable> list, object expected)
+        public static IVerifiable<IEnumerable> DoesNotContain(this IAssertion<IEnumerable> assertion, object expected, string message = "")
         {
-            return list.DoesNotContain(expected, "");
-        }
-
-        public static IVerifiable<IEnumerable> DoesNotContain(this IAssertion<IEnumerable> list, object expected, string message)
-        {
-            return new Verifiable<IEnumerable>(list,
+            return new Verifiable<IEnumerable>(assertion,
                 target =>
                 {
                     bool found = false;
 
-                    if (list != null)
+                    if (assertion != null)
+                    {
+
                         foreach (var o in target)
+                        {
                             if (o == expected)
+                            {
                                 found = true;
+                            }
+                        }
+                    }
 
                     Verify.That(found)
                         .IsFalse(string.Format("The <{0}> should not have contained: <{1}>. {2}",
@@ -121,19 +117,14 @@ namespace TestingTools.Extensions
                 });
         }
 
-        public static IVerifiable<IEnumerable<T>> DoesNotContain<T>(this IAssertion<IEnumerable<T>> list, T expected)
-        {
-            return list.DoesNotContain(expected, "");
-        }
-
-        public static IVerifiable<IEnumerable<T>> DoesNotContain<T>(this IAssertion<IEnumerable<T>> list, T expected, string message)
+        public static IVerifiable<IEnumerable<T>> DoesNotContain<T>(this IAssertion<IEnumerable<T>> list, T expected, string message = "")
         {
             return new Verifiable<IEnumerable<T>>(list, target =>
                 Verify.That(target.Contains(expected))
                       .IsFalse(string.Format(
                             "The <{0}> should not have contained: <{1}>. {2}",
-                            (list.ToString() ?? "NULL"),
-                            (expected.ToString() ?? "NULL"),
+                            (list != null ? list.ToString() : "NULL"),
+                            (expected != null ? expected.ToString() : "NULL"),
                             (message ?? string.Empty)))
                         .Now());
         }
@@ -150,12 +141,15 @@ namespace TestingTools.Extensions
                 {
                     bool result = false;
                     int index = 0;
-                    foreach(T item in target)
+                    foreach (T item in target)
                     {
                         result = evaluator(item);
                         if (!result)
                         {
-                            message = "Item at index: " + index + " did not comply with condition.\n" + message;
+                            message = String.Format("Item <{2}>, at index: {0} did not comply with condition.\n{1}",
+                                    index,
+                                    message,
+                                    item == null ? "NULL" : item.ToString());
                             break;
                         }
 
@@ -178,6 +172,7 @@ namespace TestingTools.Extensions
         {
             return list.IsTrueForAll(value => !evaluator(value), message);
         }
+
 
         /// <summary>
         /// Asserts that at least one element complies with a Predicate
