@@ -1,10 +1,9 @@
 ﻿namespace TestingTools.Tests
 {
-    using TestingTools.Core;
-    using System;
-    using Moq;
     using Fasterflect;
+    using Moq;
     using NUnit.Framework;
+    using TestingTools.Core;
     
     /// <summary>
     ///This is a test class for ItsAssertableTest and is intended
@@ -14,55 +13,15 @@
     public class ItsAssertableTest
     {
 
-
-        private TestContext testContextInstance;
-
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
         public TestContext TestContext
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            get;
+            set;
         }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
 
         /// <summary>
         /// Tests if on target get it uses the func on the parent field.
@@ -81,7 +40,6 @@
             // Assert
             parentMock.VerifyGet(m => m.Child, Times.Once());
         }
-
 
         /// <summary>
         /// Tests if it sets parent field on command when it matches the parent type.

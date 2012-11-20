@@ -1,12 +1,12 @@
 ﻿namespace TestingTools.Tests
 {
-    using TestingTools.Extensions;
-    using NUnit.Framework;
     using System;
-    using TestingTools.Core;
-    using Moq;
     using Fasterflect;
     using Helpers;
+    using Moq;
+    using NUnit.Framework;
+    using TestingTools.Core;
+    using TestingTools.Extensions;
 
     /// <summary>
     ///This is a test class for ConnectorsTest and is intended
@@ -15,53 +15,15 @@
     [TestFixture]
     public class ConnectorsTest
     {
-        private TestContext testContextInstance;
-
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
         public TestContext TestContext
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            get;
+            set;
         }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
 
         [Test]
         public void TestIfAndCanConnectAItsAssertable()
@@ -119,7 +81,7 @@
             var result = mock.And(connected);
 
             // Assert
-            Assert.IsInstanceOfType(typeof(AndConnector<object, string>), result);
+            Assert.IsInstanceOf(typeof(AndConnector<object, string>), result);
             Assert.AreEqual(result.GetFieldValue("mLeftPredicament"), mock);
             Assert.AreEqual(result.Target, connected);
         }

@@ -200,6 +200,12 @@ namespace TestingTools.Extensions
             return list.IsTrueForAny(value => !evaluator(value), message);
         }
 
+        /// <summary>
+        /// Determines whether [the specified list] [is of the specified size].
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="elementCount">The element count.</param>        
         public static IVerifiable<IEnumerable<T>> IsOfSize<T>(this IAssertion<IEnumerable<T>> list, int elementCount)
         {
             return new Verifiable<IEnumerable<T>>(list, target =>

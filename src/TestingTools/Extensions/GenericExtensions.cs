@@ -29,22 +29,22 @@
 
         public static IVerifiable<T> IsOfType<T>(this IAssertion<T> actual, Type type)
         {
-            return new Verifiable<T>(actual, target => Assert.IsInstanceOfType(type, target));
+            return new Verifiable<T>(actual, target => Assert.IsInstanceOf(type, target));
         }
 
         public static IVerifiable<T> IsOfType<T>(this IAssertion<T> actual, Type type, string message)
         {
-            return new Verifiable<T>(actual, target => Assert.IsInstanceOfType(type, target, message));
+            return new Verifiable<T>(actual, target => Assert.IsInstanceOf(type, target, message));
         }
 
         public static IVerifiable<T> IsNotOfType<T>(this IAssertion<T> actual, Type type, string message)
         {
-            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOfType(type, target, message));
+            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOf(type, target, message));
         }
 
         public static IVerifiable<T> IsNotOfType<T>(this IAssertion<T> actual, Type type)
         {
-            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOfType(type, target));
+            return new Verifiable<T>(actual, target => Assert.IsNotInstanceOf(type, target));
         }
 
         public static IVerifiable<T> IsNotNull<T>(this IAssertion<T> actual, string message = "")

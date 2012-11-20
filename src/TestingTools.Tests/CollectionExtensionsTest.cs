@@ -1,12 +1,12 @@
 ﻿namespace TestingTools.Tests
 {
-    using TestingTools.Extensions;
-    using NUnit.Framework;
     using System;
     using System.Collections.Generic;
-    using TestingTools.Core;
     using System.Linq;
     using Moq;
+    using NUnit.Framework;
+    using TestingTools.Core;
+    using TestingTools.Extensions;
 
     /// <summary>
     ///This is a test class for CollectionExtensionsTest and is intended
