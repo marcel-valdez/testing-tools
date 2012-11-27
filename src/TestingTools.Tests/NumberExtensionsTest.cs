@@ -95,14 +95,14 @@ namespace TestingTools.Tests
         /// </summary>
         /// <param name="targetNumber">The target number.</param>
         /// <param name="comparedNumber">The compared number.</param>
-        /// <param name="fail">if set to <c>true</c> it should [fail].</param>
+        /// <param name="shouldFail">if set to <c>true</c> it should [fail].</param>
         [TestCase(-1, 0, true)]
         [TestCase(0, 1, true)]
         // IsEqual
         [TestCase(0, 0, false)]
         // IsGreater                
         [TestCase(1, 0, false)]
-        public void TestIfItCanCheckGreaterThanOrEqual(int targetNumber, int comparedNumber, bool fail)
+        public void TestIfItCanCheckGreaterThanOrEqual(int targetNumber, int comparedNumber, bool shouldFail)
         {
             // Arrange            
             IAssertion<int> target = Verify.That(targetNumber);
@@ -111,18 +111,18 @@ namespace TestingTools.Tests
             IVerifiable<int> actual = NumberExtensions.IsGreaterThanOrEqual(target, comparedNumber);
 
             // Assert
-            AssertNumberComparison(fail, actual);
+            AssertNumberComparison(shouldFail, actual);
         }
 
         /// <summary>
         /// Asserts that the number comparison throws (or not) an AssertionException.
         /// </summary>
-        /// <param name="throws">if set to <c>true</c> if it should throw an AssertionException.</param>
+        /// <param name="shouldThrow">if set to <c>true</c> if it should throw an AssertionException.</param>
         /// <param name="verification">The verification to assert for an exception.</param>
-        private static void AssertNumberComparison(bool throws, IVerifiable<int> verification)
+        private static void AssertNumberComparison(bool shouldThrow, IVerifiable<int> verification)
         {
             // Assert
-            if (throws)
+            if (shouldThrow)
             {
                 Assert.Throws<AssertionException>(() => verification.Now());
             }
