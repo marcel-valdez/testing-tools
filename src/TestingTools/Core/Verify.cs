@@ -2,9 +2,30 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Reflection;
+    using System;
     public static class Verify
     {
+        static Verify()
+        {
+            // This method tries to find any version of NUnit in its path,
+            // in case the one used by the developer is not the exact
+            // version against which this was compiled (2.6.012...)
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
+            {                
+                string partialName = e.Name.Substring(0, e.Name.IndexOf(','));
+                if (partialName.ToLower().Contains("nunit"))
+                {
+                    // Put code here to load whatever version of the assembly you actually have
+                    return Assembly.Load(new AssemblyName(partialName));
+                }
+                else
+                {
+                    return null;
+                }
+            };
+        }
+
         /// <summary>
         /// Starts a new fluent test assertion, using <paramref name="target"/> as
         /// the target under test.
