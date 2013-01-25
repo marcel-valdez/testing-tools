@@ -5,12 +5,11 @@
 // -----------------------------------------------------------------------
 namespace TestingTools.Tests
 {
-    using NUnit.Framework;
-    using TestingTools.Extensions;
-    using TestingTools.Core;
-    using System;
+  using NUnit.Framework;
+  using TestingTools.Core;
+  using TestingTools.Extensions;
 
-    /// <summary>
+  /// <summary>
     /// Has all the tests for the number extensions.
     /// </summary>
     public class NumberExtensionsTest

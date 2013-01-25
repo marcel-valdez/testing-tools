@@ -1,12 +1,9 @@
 ﻿namespace TestingTools.Tests
 {
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.Linq;
-    using NUnit.Framework;
-    using Core;
-    using Extensions;
+  using System;
+  using Core;
+  using Extensions;
+  using NUnit.Framework;
 
     /// <summary>
     /// Summary description for OrVerifiableTests

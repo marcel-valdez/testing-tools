@@ -1,8 +1,8 @@
 ﻿namespace TestingTools.Tests
 {
-    using TestingTools.Core;
-    using NUnit.Framework;
-    using System;
+  using System;
+  using NUnit.Framework;
+  using TestingTools.Core;
     
     
     /// <summary>

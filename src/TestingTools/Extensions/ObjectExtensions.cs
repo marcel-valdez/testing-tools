@@ -1,8 +1,6 @@
 namespace TestingTools.Extensions
 {
-    using System;
-    using System.Diagnostics.Contracts;
-    using NUnit.Framework;
+  using NUnit.Framework;
     using TestingTools.Core;
 
     public static class ObjectExtensions

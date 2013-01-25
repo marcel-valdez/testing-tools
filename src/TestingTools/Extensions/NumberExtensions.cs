@@ -1,7 +1,7 @@
 namespace TestingTools.Extensions
 {
-    using TestingTools.Core;
-    using NUnit.Framework;
+  using NUnit.Framework;
+  using TestingTools.Core;
 
     public static class NumberExtensions
     {

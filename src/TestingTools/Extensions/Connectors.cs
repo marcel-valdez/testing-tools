@@ -1,7 +1,7 @@
 ﻿namespace TestingTools.Extensions
 {
-    using TestingTools.Core;
-    using System;
+  using System;
+  using TestingTools.Core;
 
     public static class Connectors
     {
