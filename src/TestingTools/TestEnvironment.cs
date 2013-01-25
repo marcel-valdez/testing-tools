@@ -1,10 +1,11 @@
 namespace TestingTools
 {
-  using NUnit.Framework;
   using System;
-  using System.IO;
   using System.Diagnostics;
+  using System.Diagnostics.Contracts;
+  using System.IO;
   using System.Reflection;
+  using NUnit.Framework;
 
   public class TestEnvironment
   {
@@ -16,69 +17,131 @@ namespace TestingTools
     /// <param name="filename">The filename without path</param>
     public static string GetExecutionFilepath(string filename, TestContext testContext = null)
     {
-      if (FileExists(filename))
-      {
-        return Path.GetFullPath(filename);
-      }
 
-      if (testContext != null)
+      string[] paths = new string[] {
+        Path.GetFullPath(filename),
+        BuildPathFromCodeBaseDir(filename),
+        BuildPathFromCurrentDir(filename),
+        BuildPathFromDomainDir(filename),
+        BuildPathFromStackFrame(filename),
+        testContext != null ? 
+          BuildPathFromTestDeployment(filename, testContext) : 
+          "INEXISTANT_FILE.DOES_NOT_EXIST",
+        testContext != null ? 
+          BuildPathFromTestDir(filename, testContext) :
+          "INEXISTANT_FILE.DOES_NOT_EXIST",
+      };
+
+      foreach (string path in paths)
       {
-        string deploymentPath = Path.GetFullPath(
-                                      Path.Combine(
-                                        testContext.TestDirectory, filename));
-        if (FileExists(deploymentPath))
+        if (FileExists(path))
         {
-          return deploymentPath;
-        }
-
-        string testDeploymentPath = Path.GetFullPath(
-                                          Path.Combine(
-                                            testContext.WorkDirectory, filename));
-        if (FileExists(testDeploymentPath))
-        {
-          return testDeploymentPath;
+          return path;
         }
       }
 
-      string codeBaseFilePath = Assembly.GetCallingAssembly().EscapedCodeBase;
-      int stringEnd = codeBaseFilePath.LastIndexOf('/');
-      codeBaseFilePath = Path.GetFullPath(codeBaseFilePath
-                                                  .Substring(0, stringEnd + 1)
-                                                  .Replace("file:///", "") + filename);
-      if (FileExists(codeBaseFilePath))
-      {
-        return codeBaseFilePath;
-      }
-
-      string appDomainPath = Path.GetFullPath(
-                                  AppDomain.CurrentDomain.BaseDirectory 
-                                  + Path.DirectorySeparatorChar 
-                                  + filename);
-      if (FileExists(appDomainPath))
-      {
-        return appDomainPath;
-      }
-
-
-      string currentPath = Directory.GetCurrentDirectory() + "/" + filename;
-      if (FileExists(currentPath))
-      {
-        return currentPath;
-      }
-
-      var stackFrameFile = new FileInfo(new StackFrame(true).GetFileName());
-      string stackFramePath = stackFrameFile.Directory.FullName + "/" + filename;
-      if (FileExists(stackFramePath))
-      {
-        return stackFramePath;
-      }
-
-      throw new Exception(filename + " not found.");
+      throw new FileNotFoundException(filename + " not found.");
     }
 
+    /// <summary>
+    /// Checks if the given file exists.
+    /// </summary>
+    /// <param name="filepath">The filepath.</param>
+    /// <returns>true if the file exists, false otherwise.</returns>    
     private static bool FileExists(string filepath)
     {
       return new FileInfo(filepath).Exists;
+    }
+
+    /// <summary>
+    /// Builds the path stack frame path.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    /// <returns>The file path based on stack frame path</returns>    
+    private static string BuildPathFromStackFrame(string filename)
+    {
+      var stackFrameFile = new FileInfo(new StackFrame(true).GetFileName());
+      return stackFrameFile.Directory.FullName
+                            + Path.DirectorySeparatorChar
+                            + filename;
+    }
+
+    /// <summary>
+    /// Builds the path from current working directory.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    /// <returns>
+    /// A full file path attempt from the current working directory.
+    /// </returns>    
+    private static string BuildPathFromCurrentDir(string filename)
+    {
+      return Directory.GetCurrentDirectory()
+                    + Path.DirectorySeparatorChar
+                    + filename;
+    }
+
+    /// <summary>
+    /// Builds the path from domain base directory.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    /// <returns>
+    /// A full file path based on the app domain
+    /// base directory.
+    /// </returns>    
+    private static string BuildPathFromDomainDir(string filename)
+    {
+      return Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory
+                              + Path.DirectorySeparatorChar
+                              + filename);
+    }
+
+    /// <summary>
+    /// Builds the path from code base directory.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    /// <returns>
+    /// A full file path based on the code base directory
+    /// </returns>
+    private static string BuildPathFromCodeBaseDir(string filename)
+    {
+      string codeBaseFilePath = Assembly.GetCallingAssembly().EscapedCodeBase;
+      int stringEnd = codeBaseFilePath.LastIndexOf(Path.DirectorySeparatorChar);
+      return Path.GetFullPath(codeBaseFilePath.Substring(0, stringEnd + 1)
+                                              .Replace("file:///", "") + filename);
+    }
+
+    /// <summary>
+    /// Builds the path from test deployment.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    /// <param name="testContext">The test context.</param>
+    /// <returns>
+    /// A full file path based on the test deployment directory.
+    /// </returns>    
+    private static string BuildPathFromTestDeployment(
+      string filename, 
+      TestContext testContext)
+    {
+      Contract.Requires(testContext != null);
+      return Path.GetFullPath(
+              Path.Combine(testContext.WorkDirectory, filename));
+    }
+
+    /// <summary>
+    /// Builds the path from test directory.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    /// <param name="testContext">The test context.</param>
+    /// <returns>
+    /// A full file path based on the test directory.
+    /// </returns>    
+    private static string BuildPathFromTestDir(
+      string filename, 
+      TestContext testContext)
+    {
+      return Path.GetFullPath(
+              Path.Combine(
+                testContext.TestDirectory, filename));
     }
   }
 }
