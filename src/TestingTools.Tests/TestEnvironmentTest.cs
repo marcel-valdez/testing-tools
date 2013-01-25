@@ -31,5 +31,19 @@ namespace TestingTools.Tests
       // Assert
       Assert.That(actual, Is.EqualTo(expected));
     }
+
+    [Test]
+    public void TestIfItThrowsOnNonExistantFile()
+    {
+      // Arrange
+      string nonExisting = @"out\non_existing";
+      string expected = Path.GetFullPath(nonExisting);
+
+      // Act
+      TestDelegate act = () => TestEnvironment.GetExecutionFilepath(nonExisting);
+
+      // Assert
+      Assert.Throws<FileNotFoundException>(act);
+    }
   }
 }
