@@ -1,15 +1,19 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="MethodExtensionsTest.cs" company="">
-// Marcel Valdez, Copyright (r) 2012
+﻿// ***********************************************************************
+// Assembly         : TestingTools.Tests
+// Author           : Marcel Valdez
+// Created          : 02-02-2013
+//
+// Last Modified By : Marcel Valdez
+// Last Modified On : 02-03-2013
+// ***********************************************************************
+// <copyright file="MethodExtensionsTest.cs" company="Marcel Valdez">
+//     Marcel Valdez. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// ***********************************************************************
 
 namespace TestingTools.Tests
 {
   using System;
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Text;
   using NUnit.Framework;
   using TestingTools.Core;
   using TestingTools.Extensions;
@@ -25,15 +29,21 @@ namespace TestingTools.Tests
     /// Tests if it can verify console output.
     /// </summary>
     /// <param name="expectedWritten">The expected written.</param>
+    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>
     /// <param name="actualWritten">The actual written.</param>
-    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>    
     [Test, Category("IntegrationTest")]
-    [TestCase("bad", "test", false)]
-    [TestCase("test", "test", true)]
-    public void TestIfItCanVerifyExactConsoleOutput(string expectedWritten, string actualWritten, bool shouldPass)
+    [TestCase("bad", false, new[] { "test" })]
+    [TestCase("test", true, new[] { "test" })]
+    public void TestIfItCanVerifyExactConsoleOutput(string expectedWritten, bool shouldPass, params string[] actualWritten)
     {
       // Arrange
-      Action targetAct = () => Console.Write(actualWritten);
+      Action targetAct = () =>
+      {
+        foreach (string msg in actualWritten)
+        {
+          Console.Write(msg);
+        }
+      };
       var target = Verify.That(targetAct).WritesExactlyToConsole(expectedWritten);
 
       // Act
@@ -46,7 +56,7 @@ namespace TestingTools.Tests
       }
       else
       {
-        AssertionException execption = Assert.Throws<AssertionException>(act);
+        Assert.Throws<AssertionException>(act);
       }
     }
 
@@ -54,19 +64,31 @@ namespace TestingTools.Tests
     /// Tests if it can verify console output.
     /// </summary>
     /// <param name="expectedWritten">The expected written.</param>
+    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>
     /// <param name="actualWritten">The actual written.</param>
-    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>    
     [Test, Category("IntegrationTest")]
-    [TestCase("bad", "test", false)]
-    [TestCase("bad", "", false)]
-    [TestCase("test", "test", true)]
-    [TestCase("test", "testA", true)]
-    [TestCase("test", "Atest", true)]
-    [TestCase("test", "AtestA", true)]
-    public void TestIfItCanVerifyConsoleOutput(string expectedWritten, string actualWritten, bool shouldPass)
+    [TestCase("bad", false, new[] { "test" })]
+    [TestCase("bad", false, new[] { "" })]
+    [TestCase("test", true, new[] { "test" })]
+    [TestCase("test", true, new[] { "testA" })]
+    [TestCase("test", true, "test", "A")]
+    [TestCase("test", true, new[] { "Atest" })]
+    [TestCase("test", true, "A", "test")]
+    [TestCase("test", true, new[] { "AtestA" })]
+    [TestCase("test", true, "A", "test", "A")]
+    [TestCase("test", true, new[] { "A\ntest\nA" })]
+    [TestCase("test", true, "A\n", "test\n", "A")]
+    public void TestIfItCanVerifyConsoleOutput(string expectedWritten, bool shouldPass, params string[] actualWritten)
     {
       // Arrange
-      Action targetAct = () => Console.Write(actualWritten);
+      Action targetAct = () =>
+      {
+        foreach (string msg in actualWritten)
+        {
+          Console.Write(msg);
+        }
+      };
+
       var target = Verify.That(targetAct).WritesToConsole(expectedWritten);
 
       // Act
@@ -79,7 +101,7 @@ namespace TestingTools.Tests
       }
       else
       {
-        AssertionException execption = Assert.Throws<AssertionException>(act);
+        Assert.Throws<AssertionException>(act);
       }
     }
 
@@ -87,15 +109,21 @@ namespace TestingTools.Tests
     /// Tests if it can verify console output.
     /// </summary>
     /// <param name="expectedWritten">The expected written.</param>
+    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>
     /// <param name="actualWritten">The actual written.</param>
-    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>    
     [Test, Category("IntegrationTest")]
-    [TestCase("bad", "test", true)]
-    [TestCase("test", "test", false)]
-    public void TestIfItCanVerifyExactBadConsoleOutput(string expectedWritten, string actualWritten, bool shouldPass)
+    [TestCase("bad", true, new[] { "test" })]
+    [TestCase("test", false, new[] { "test" })]
+    public void TestIfItCanVerifyExactBadConsoleOutput(string expectedWritten, bool shouldPass, params string[] actualWritten)
     {
       // Arrange
-      Action targetAct = () => Console.Write(actualWritten);
+      Action targetAct = () =>
+      {
+        foreach (string msg in actualWritten)
+        {
+          Console.Write(msg);
+        }
+      };
       var target = Verify.That(targetAct).DoesntWriteExactlyToConsole(expectedWritten);
 
       // Act
@@ -108,7 +136,7 @@ namespace TestingTools.Tests
       }
       else
       {
-        AssertionException execption = Assert.Throws<AssertionException>(act);
+        Assert.Throws<AssertionException>(act);
       }
     }
 
@@ -116,19 +144,26 @@ namespace TestingTools.Tests
     /// Tests if it can verify console output.
     /// </summary>
     /// <param name="expectedWritten">The expected written.</param>
+    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>
     /// <param name="actualWritten">The actual written.</param>
-    /// <param name="shouldPass">if set to <c>true</c> [should pass].</param>    
     [Test, Category("IntegrationTest")]
-    [TestCase("bad", "test", true)]
-    [TestCase("bad", "", true)]
-    [TestCase("test", "test", false)]
-    [TestCase("test", "testA", false)]
-    [TestCase("test", "Atest", false)]
-    [TestCase("test", "AtestA", false)]
-    public void TestIfItCanVerifyBadConsoleOutput(string expectedWritten, string actualWritten, bool shouldPass)
+    [TestCase("bad", true, new[] { "test" })]
+    [TestCase("bad", true, new[] { "" })]
+    [TestCase("test", false, new[] { "test" })]
+    [TestCase("test", false, new[] { "testA" })]
+    [TestCase("test", false, new[] { "Atest" })]
+    [TestCase("test", false, new[] { "AtestA" })]
+    [TestCase("test", false, new[] { "A\ntest\nA" })]
+    public void TestIfItCanVerifyBadConsoleOutput(string expectedWritten, bool shouldPass, params string[] actualWritten)
     {
       // Arrange
-      Action targetAct = () => Console.Write(actualWritten);
+      Action targetAct = () =>
+      {
+        foreach (string msg in actualWritten)
+        {
+          Console.Write(msg);
+        }
+      };
       var target = Verify.That(targetAct).DoesntWriteToConsole(expectedWritten);
 
       // Act
@@ -141,7 +176,7 @@ namespace TestingTools.Tests
       }
       else
       {
-        AssertionException execption = Assert.Throws<AssertionException>(act);
+        Assert.Throws<AssertionException>(act);
       }
     }
 
