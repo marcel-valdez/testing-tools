@@ -9,6 +9,7 @@ namespace TestingTools
 
   public class TestEnvironment
   {
+    private const string INEXISTANT_FILE = "INEXISTANT_FILE.DOES_NOT_EXIST";
     /// <summary>
     /// Gets the full file path of an existing output file in the execution environment
     /// </summary>
@@ -26,10 +27,10 @@ namespace TestingTools
         BuildPathFromStackFrame(filename),
         testContext != null ? 
           BuildPathFromTestDeployment(filename, testContext) : 
-          "INEXISTANT_FILE.DOES_NOT_EXIST",
+          INEXISTANT_FILE,
         testContext != null ? 
           BuildPathFromTestDir(filename, testContext) :
-          "INEXISTANT_FILE.DOES_NOT_EXIST",
+          INEXISTANT_FILE,
       };
 
       foreach (string path in paths)
@@ -40,7 +41,7 @@ namespace TestingTools
         }
       }
 
-      throw new FileNotFoundException(filename + " not found.");
+      throw new FileNotFoundException(string.Format("{0} not found.", filename));
     }
 
     /// <summary>
@@ -60,10 +61,15 @@ namespace TestingTools
     /// <returns>The file path based on stack frame path</returns>    
     private static string BuildPathFromStackFrame(string filename)
     {
-      var stackFrameFile = new FileInfo(new StackFrame(true).GetFileName());
-      return stackFrameFile.Directory.FullName
-                            + Path.DirectorySeparatorChar
-                            + filename;
+      var stackFrame = new StackFrame(true);
+      string stackFrameFilePath = stackFrame.GetFileName();
+      if (string.IsNullOrEmpty(stackFrameFilePath))
+      {
+        return INEXISTANT_FILE;
+      }
+
+      return Path.GetFullPath(
+              Path.Combine(Path.GetDirectoryName(stackFrameFilePath), filename));
     }
 
     /// <summary>
@@ -75,9 +81,8 @@ namespace TestingTools
     /// </returns>    
     private static string BuildPathFromCurrentDir(string filename)
     {
-      return Directory.GetCurrentDirectory()
-                    + Path.DirectorySeparatorChar
-                    + filename;
+      return Path.GetFullPath(
+              Path.Combine(Directory.GetCurrentDirectory(), filename));
     }
 
     /// <summary>
@@ -90,9 +95,8 @@ namespace TestingTools
     /// </returns>    
     private static string BuildPathFromDomainDir(string filename)
     {
-      return Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory
-                              + Path.DirectorySeparatorChar
-                              + filename);
+      return Path.GetFullPath(
+              Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename));
     }
 
     /// <summary>
@@ -106,8 +110,10 @@ namespace TestingTools
     {
       string codeBaseFilePath = Assembly.GetCallingAssembly().EscapedCodeBase;
       int stringEnd = codeBaseFilePath.LastIndexOf(Path.DirectorySeparatorChar);
-      return Path.GetFullPath(codeBaseFilePath.Substring(0, stringEnd + 1)
-                                              .Replace("file:///", "") + filename);
+      return Path.GetFullPath(
+                Path.Combine(codeBaseFilePath.Substring(0, stringEnd + 1)
+                                              .Replace("file:///", ""),
+                              filename));
     }
 
     /// <summary>
@@ -140,8 +146,7 @@ namespace TestingTools
       TestContext testContext)
     {
       return Path.GetFullPath(
-              Path.Combine(
-                testContext.TestDirectory, filename));
+              Path.Combine(testContext.TestDirectory, filename));
     }
   }
 }

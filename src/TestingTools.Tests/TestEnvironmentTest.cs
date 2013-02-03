@@ -17,12 +17,14 @@ namespace TestingTools.Tests
   {
     /// <summary>
     /// Tests if it gets full file path for existing files.
-    /// </summary>    
+    /// </summary>
+    /// <param name="existingFile">An existing file path</param>
     [Test]
-    public void TestIfItGetsFullFilePathForExistingFiles()
+    [TestCase(@"out\existing_file.txt")]
+    [TestCase("out/existing_file.txt")]
+    public void TestIfItGetsFullFilePathForExistingFiles(string existingFile)
     {
       // Arrange
-      string existingFile = @"out\existing_file.txt";
       string expected = Path.GetFullPath(existingFile);
 
       // Act
