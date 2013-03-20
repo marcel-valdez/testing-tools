@@ -31,3 +31,4 @@ src/packages/*
 src/TestingTools.ncrunchsolution
 lib/
 *.nupkg
+*~

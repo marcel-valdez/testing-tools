@@ -22,6 +22,11 @@ used in any assertion scenario.
   + If you have ever tried to read a data file from the current testing directory, you understand what I mean.
 - You can assert over the Properties of an object under test, not just the object itself.
 
+## How to get it
+This tool is provided as a NuGet package, search for it using the name: [Testing Tools] (https://nuget.org/packages/TestingTools/)
+
+You can also install it from the command line: `c:\project\dir\path> nuget install TestingTools`
+
 `TODO: Add example usage of every feature.`
 
   
@@ -42,12 +47,14 @@ public class CalculatorTest
     Calculator target = new Calculator();
     int expected = 4;
     int result; 
+    
     // Act
     result = target.Sum(2, 2);  
-    // Assert
+    
+    // Assert: Should Pass
     Verify.That(result)
-        .IsEqualTo(expected);
-        .Now();
+          .IsEqualTo(expected);
+          .Now();
   }
 
   [Test]
@@ -56,14 +63,73 @@ public class CalculatorTest
     // Arrange
     Calculator target = new Calculator();
     int result; 
+    
     // Act
     result = target.Sum(2, 2);  
-    // Assert
+    
+    // Assert: Should Pass
     Verify.That(result)
-        .IsLessThan(5)
-        .And()
-        .IsGreaterThan(3)
-        .Now();
+          .IsLessThan(5)
+          .And()
+          .IsGreaterThan(3)
+          .Now();
+  }
+  
+  [Test]
+  public void TestThrowsException()
+  {
+    // Arrange
+    var target = new Calculator();
+    int result;
+    
+    // Act
+    var act = () => target.Sum(Int.MaxValue, 1);
+    
+    // Assert: Should Pass
+    Verify.That(act).ThrowsException().Now();
+  }
+  
+  [Test]
+  public void TestArrayElements()
+  {
+    // Arrange
+    var array = new int[] { 2, 3, 4 };
+    
+    // Assert: Should Pass
+    Verify.That(array).DoesContain(2)
+          .Now();
+          
+    Verify.That(array).DoesNotContain(1)
+          .Now();
+  }
+  
+  [Test]
+  public void TestConsoleOutput()
+  {
+    // Arrange
+    string expected = "Hello World!";
+    
+    // Act
+    Action act = () => Console.Write("@Hello World!");
+    
+    // Assert: Should Pass
+    Verify.That(act).WritesToConsole(expected)
+          .Now();
+  }
+  
+  [Test]
+  public void TestExactConsoleOutput()
+  {
+    // Arrange
+    string notExpected = "Hello World!";
+    
+    // Act
+    Action act = () => Console.Write("@Hello World!");
+    
+    // Assert: Should Pass
+    Verify.That(act)
+          .DoesntWriteExactlyToConsole(notExpected)
+          .Now();
   }
 }
 `````
