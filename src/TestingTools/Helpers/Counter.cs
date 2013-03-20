@@ -1,7 +1,6 @@
 namespace TestingTools.Helpers
 {
-    using System;
-    using System.Diagnostics.Contracts;
+    using System;    
 
     /// <summary>
     /// Contador que tiene la capacidad de 'brincarse cuentas' con una frecuencia específica
@@ -18,6 +17,9 @@ namespace TestingTools.Helpers
         /// <param name="skipFrequency">The skip frequency.</param>
         public Counter(int skipFrequency = 0)
         {
+            if(!typeof(T).IsValueType) throw new ArgumentException("Type: <T> must be a value type.");
+            if(!typeof(T).IsPrimitive) throw new ArgumentException("Type: <T> must be a primitive (built-in) type.");
+
             this.Skip = skipFrequency + 1;
         }
 
@@ -112,13 +114,6 @@ namespace TestingTools.Helpers
         public static implicit operator T(Counter<T> counter)
         {
             return counter.Value;
-        }
-
-        [ContractInvariantMethod]
-        private void InvariantMethod()
-        {
-            Contract.Invariant(typeof(T).IsValueType);
-            Contract.Invariant(typeof(T).IsPrimitive);
         }
     }
 }

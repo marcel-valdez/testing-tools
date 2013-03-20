@@ -19,7 +19,11 @@
         /// <param name="methodName">Name of the method.</param>
         /// <param name="genericTypeArgs">The generic type args.</param>
         /// <returns></returns>
-        public static Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> GetStaticMethod<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(this Type classType, string methodName, params Type[] genericTypeArgs)
+        public static Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> 
+            GetStaticMethod<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
+                this Type classType, 
+                string methodName, 
+                params Type[] genericTypeArgs)
         {
             return GetStaticMethod<TResult>(classType, methodName, new Type[] { typeof(TParam1), typeof(TParam2), typeof(TParam3), typeof(TParam4), typeof(TParam5) }, genericTypeArgs)
                    .Wrap<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>();

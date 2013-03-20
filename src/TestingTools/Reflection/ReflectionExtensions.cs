@@ -1,7 +1,6 @@
 namespace TestingTools.Reflection
 {
     using System;
-    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
     using Fasterflect;
@@ -64,9 +63,9 @@ namespace TestingTools.Reflection
         /// </returns>
         public static bool IsSubclassOrImplementsBaseGeneric(this Type subGeneric, Type baseGeneric)
         {
-            Contract.Requires(subGeneric != null, "subGeneric is null.");
-            Contract.Requires(baseGeneric != null, "baseGeneric is null.");
-            Contract.Requires(baseGeneric.IsGenericType);
+            if(subGeneric == null)  throw new ArgumentException("subGeneric must not be null.");
+            if(baseGeneric == null) throw new ArgumentException("baseGeneric must not be null.");
+            if(!baseGeneric.IsGenericType) throw new ArgumentException("baseGeneric must be a GenericType (baseGeneric.IsGenericType must be true)");
 
             if (subGeneric.GetInterfaces()
                 .Select(iface => iface.GUID)

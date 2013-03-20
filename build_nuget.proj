@@ -1,0 +1,12 @@
+<Project DefaultTargets="Deploy" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Deploy</Configuration>
+  </PropertyGroup>
+  <Target Name="Deploy">
+    <MSBuild Targets="Clean;Rebuild" Projects="src/TestingTools/TestingTools.csproj" ContinueOnError="false" />
+
+    <Exec Command="rmdir /S /Q $(MSBuildProjectDirectory)\$(PkgDir)" ContinueOnError="True" />
+    <Exec Command="mkdir $(MSBuildProjectDirectory)\$(PkgDir)" />
+    <Exec Command="CALL copy_from_to.bat $(MSBuildProjectDirectory)\src\TestingTools\bin\Release\ $(MSBuildProjectDirectory)\$(PkgDir)" />
+  </Target>
+</Project>

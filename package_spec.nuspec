@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>TestingTools</id>
+    <version>0.1.1</version>
+    <title>Testing Tools</title>
+    <authors>Marcel Valdez</authors>
+    <owners>Marcel Valdez</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/marcel-valdez/testing-tools</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Extensions over NUnit to write fluent assertions with the Arrange-Act-Assert pattern.</description>
+    <releaseNotes>New NuGet package for the community.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>NUnit Assertions Fluent</tags>
+  </metadata>
+</package>

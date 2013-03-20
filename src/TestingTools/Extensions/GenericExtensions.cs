@@ -1,7 +1,6 @@
 ﻿namespace TestingTools.Extensions
 {
-    using System;
-    using System.Diagnostics.Contracts;
+    using System;    
     using NUnit.Framework;
     using TestingTools.Core;
 
@@ -115,7 +114,8 @@
         /// <returns></returns>
         public static IVerifiable<T> ItsTrueThat<T>(this IAssertion<T> actual, Predicate<T> predicate, string message = "")
         {
-            Contract.Requires(predicate != null, "predicate is null.");
+            if(predicate == null) throw new ArgumentException("predicate is null.");
+            
             return new Verifiable<T>(actual, target => Assert.IsTrue(predicate(target)));
         }
 
@@ -129,7 +129,8 @@
         /// <returns></returns>
         public static Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> Member<T, TMember>(this IAssertion<T> parent, Func<TMember> getter)
         {
-            Contract.Requires(getter != null, "getter must not be null");
+            if(getter == null) throw new ArgumentException("getter must not be null");
+            
             Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> verificator =
                 memberVerification =>
                     {
@@ -148,7 +149,8 @@
 
         public static Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> Member<T, TMember>(this IAssertion<T> parent, TMember member)
         {
-            Contract.Requires(member != null, "getter must not be null");
+            if(member == null) throw new ArgumentException("getter must not be null");
+            
             Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> verificator =
                 memberVerification =>
                 {
@@ -167,7 +169,8 @@
 
         public static Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> Member<T, TMember>(this IAssertion<T> parent, Func<T, TMember> getter)
         {
-            Contract.Requires(getter != null, "getter must not be null");
+            if(getter == null) throw new ArgumentException("getter must not be null");
+            
             Func<Func<IAssertion<TMember>, IVerifiable<TMember>>, IVerifiable<T>> verificator =
                 memberVerification =>
                 {

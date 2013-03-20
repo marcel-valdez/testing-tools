@@ -16,7 +16,11 @@
         /// <param name="parameterTypes">The parameter types.</param>
         /// <param name="genericTypeArgs">The generic type args.</param>
         /// <returns></returns>
-        public static Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> GetMethod<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult, T>(this T instance, string methodName, params Type[] genericTypeArgs)
+        public static Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> 
+            GetMethod<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult, T>(
+                this T instance, 
+                string methodName,
+                params Type[] genericTypeArgs)
         {
             Type[] parameterTypes = new Type[] { typeof(TParam1), typeof(TParam2), typeof(TParam3), typeof(TParam4), typeof(TParam5), typeof(TParam6) };
             Flags flags = Flags.InstanceAnyVisibility;

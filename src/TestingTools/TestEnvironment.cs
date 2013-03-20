@@ -1,8 +1,7 @@
 namespace TestingTools
 {
   using System;
-  using System.Diagnostics;
-  using System.Diagnostics.Contracts;
+  using System.Diagnostics;  
   using System.IO;
   using System.Reflection;
   using NUnit.Framework;
@@ -128,7 +127,8 @@ namespace TestingTools
       string filename, 
       TestContext testContext)
     {
-      Contract.Requires(testContext != null);
+      if(testContext == null) throw new ArgumentException("Test context must not be null.");
+
       return Path.GetFullPath(
               Path.Combine(testContext.WorkDirectory, filename));
     }

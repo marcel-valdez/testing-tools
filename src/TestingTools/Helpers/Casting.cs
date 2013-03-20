@@ -1,4 +1,10 @@
-﻿namespace TestingTools.Helpers
+﻿#if NET35
+public delegate TResult Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(TParam1 arg1, TParam2 arg2, TParam3 arg3, TParam4 arg4, TParam5 arg5);
+
+public delegate TResult Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(TParam1 arg1, TParam2 arg2, TParam3 arg3, TParam4 arg4, TParam5 arg5, TParam6 arg6);
+#endif
+
+namespace TestingTools.Helpers
 {
     using System;
 
@@ -62,7 +68,7 @@
             {
                 return func.Call(arg1, arg2, arg3, arg4);
             };
-        }
+        }        
 
         /// <summary>
         /// Wraps the function.
@@ -71,7 +77,9 @@
         /// <typeparam name="TResult">The type of the result.</typeparam>
         /// <param name="func">The func.</param>
         /// <returns></returns>
-        public static Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> Wrap<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(this Func<object[], TResult> func)
+        public static Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> 
+            Wrap<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
+                this Func<object[], TResult> func)
         {
             return (arg1, arg2, arg3, arg4, arg5) =>
             {
