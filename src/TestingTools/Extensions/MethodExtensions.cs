@@ -18,11 +18,9 @@ namespace TestingTools.Extensions
       string message = "")
     {
       return new Verifiable<Func<T>>(function, target =>
-              Assert.IsNotNull(
-                  target.GetThrownException(),
-                  string.Format(
-                    "La función debió lanzar una excepción, pero no fue así.\n{0}", 
-                    message)));
+              Assert.IsNotNull(target.GetThrownException(),
+                              string.Format("The function should've not thrown an exception, but it did.\n{0}", 
+                                            message)));
     }
 
     /// <summary>
@@ -54,7 +52,7 @@ namespace TestingTools.Extensions
               Assert.IsNull(
                   target.GetThrownException(),
                   string.Format(
-                    "La función no debió lanzar una excepción, pero sí lo hizo.\n{0}", 
+                    "The function should've not thrown an exception, but it did.\n{0}", 
                     message)));
     }
 
@@ -94,10 +92,9 @@ namespace TestingTools.Extensions
         target();
         string actualWritten = consoleOut.ToString();
         Console.SetOut(Console.Out);
-        Assert.AreEqual(
-          actualWritten, 
-          expectedWritten, 
-          message);
+        Assert.AreEqual(actualWritten, 
+                        expectedWritten, 
+                        message);
       });
     }
 
@@ -121,10 +118,9 @@ namespace TestingTools.Extensions
         target();
         string actualWritten = consoleOut.ToString();
         Console.SetOut(Console.Out);
-        Assert.AreNotEqual(
-          actualWritten,
-          expectedWritten,
-          message);
+        Assert.AreNotEqual(actualWritten,
+                           expectedWritten,
+                           message);
       });
     }
 
@@ -149,10 +145,9 @@ namespace TestingTools.Extensions
         target();
         string actualWritten = consoleOut.ToString();
         Console.SetOut(Console.Out);
-        Assert.That(
-          actualWritten, 
-          Is.StringContaining(expectedWritten), 
-          message);
+        Assert.That(actualWritten, 
+                    Is.StringContaining(expectedWritten), 
+                    message);
       });
     }
 
@@ -176,10 +171,9 @@ namespace TestingTools.Extensions
         target();
         string actualWritten = consoleOut.ToString();
         Console.SetOut(Console.Out);
-        Assert.That(
-          actualWritten,
-          Is.Not.StringContaining(expectedWritten),
-          message);
+        Assert.That(actualWritten,
+                    Is.Not.StringContaining(expectedWritten),
+                    message);
       });
     }
 
