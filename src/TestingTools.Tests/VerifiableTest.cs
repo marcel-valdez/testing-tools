@@ -4,7 +4,6 @@
   using NUnit.Framework;
   using TestingTools.Core;
 
-
   /// <summary>
   ///This is a test class for VerifiableTest and is intended
   ///to contain all VerifiableTest Unit Tests
@@ -39,7 +38,6 @@
       // Act
       verifiable.Command("test");
 
-
       // Assert
       Assert.IsTrue(root.CommandCalled);
       Assert.AreEqual(root.CommandObject, "test");
@@ -63,7 +61,6 @@
       }
       catch (Exception x)
       {
-
         ex = x;
       }
 

@@ -1,7 +1,7 @@
 namespace TestingTools
 {
   using System;
-  using System.Diagnostics;  
+  using System.Diagnostics;
   using System.IO;
   using System.Reflection;
   using NUnit.Framework;
@@ -123,11 +123,10 @@ namespace TestingTools
     /// <returns>
     /// A full file path based on the test deployment directory.
     /// </returns>    
-    private static string BuildPathFromTestDeployment(
-      string filename, 
-      TestContext testContext)
+    private static string BuildPathFromTestDeployment(string filename, TestContext testContext)
     {
-      if(testContext == null) throw new ArgumentException("Test context must not be null.");
+      if (testContext == null)
+        throw new ArgumentException("Test context must not be null.");
 
       return Path.GetFullPath(
               Path.Combine(testContext.WorkDirectory, filename));
@@ -141,9 +140,7 @@ namespace TestingTools
     /// <returns>
     /// A full file path based on the test directory.
     /// </returns>    
-    private static string BuildPathFromTestDir(
-      string filename, 
-      TestContext testContext)
+    private static string BuildPathFromTestDir(string filename, TestContext testContext)
     {
       return Path.GetFullPath(
               Path.Combine(testContext.TestDirectory, filename));

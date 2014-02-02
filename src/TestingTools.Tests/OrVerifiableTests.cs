@@ -1,7 +1,6 @@
 ﻿namespace TestingTools.Tests
 {
   using System;
-
   using NUnit.Framework;
 
   /// <summary>
