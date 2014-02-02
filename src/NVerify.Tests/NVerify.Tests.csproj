@@ -68,7 +68,7 @@
     <Compile Include="VerifiableTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TestingTools\NVerify.csproj">
+    <ProjectReference Include="..\NVerify\NVerify.csproj">
       <Project>{8367CC69-530D-46FC-8555-CF1990159674}</Project>
       <Name>NVerify</Name>
     </ProjectReference>
