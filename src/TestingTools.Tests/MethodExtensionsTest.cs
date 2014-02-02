@@ -15,8 +15,6 @@ namespace TestingTools.Tests
 {
   using System;
   using NUnit.Framework;
-  using TestingTools.Core;
-  using TestingTools.Extensions;
 
   /// <summary>
   /// This class contains the unit tests for the MethodExtensions class

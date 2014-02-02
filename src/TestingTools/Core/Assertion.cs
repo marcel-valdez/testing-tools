@@ -2,7 +2,7 @@
 {
     internal class Assertion<T> : IAssertion<T>
     {
-        private T mTarget;
+      private readonly T mTarget;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Assertion&lt;T&gt;"/> class.

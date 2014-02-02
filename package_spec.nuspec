@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>TestingTools</id>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
     <title>Testing Tools</title>
     <authors>Marcel Valdez</authors>
     <owners>Marcel Valdez</owners>
@@ -10,7 +10,10 @@
     <projectUrl>https://github.com/marcel-valdez/testing-tools</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Extensions over NUnit to write fluent assertions with the Arrange-Act-Assert pattern.</description>
-    <releaseNotes>- Added fixes to tests over method extensions.</releaseNotes>
+    <releaseNotes>
+    - Improved usability by only requiring to import one namespace: using TestingTools
+    - Improved code formatting
+    </releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>NUnit Assertions Fluent</tags>
   </metadata>

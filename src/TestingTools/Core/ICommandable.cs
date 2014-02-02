@@ -2,7 +2,7 @@
 {
 
   internal interface ICommandable
-    {
-        void Command(object command);
-    }
+  {
+    void Command(object command);
+  }
 }

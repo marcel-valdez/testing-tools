@@ -5,7 +5,7 @@ namespace TestingTools.Core
     public class ItsAssertable<TParent, TMember> : IAssertion<TMember>, ICommandable
     {
         private TParent mParent;
-        private Func<TParent, TMember> mGetter;
+        private readonly Func<TParent, TMember> mGetter;
 
         internal ItsAssertable(Func<TParent, TMember> getter)
         {

@@ -1,7 +1,7 @@
 namespace TestingTools.Core
 {
-    public interface IVerifiable<T> : IAssertion<T>
-    {
-        void Now();
-    }
+  public interface IVerifiable<T> : IAssertion<T>
+  {
+    void Now();
+  }
 }

@@ -1,9 +1,9 @@
-namespace TestingTools.Extensions
+namespace TestingTools
 {
   using System;
+  using System.IO;
   using NUnit.Framework;
   using TestingTools.Core;
-  using System.IO;
 
   public static class MethodExtensions
   {
@@ -14,12 +14,12 @@ namespace TestingTools.Extensions
     /// <param name="function">The function.</param>
     /// <param name="message">The message.</param>
     public static IVerifiable<Func<T>> ThrowsException<T>(
-      this IAssertion<Func<T>> function, 
+      this IAssertion<Func<T>> function,
       string message = "")
     {
       return new Verifiable<Func<T>>(function, target =>
               Assert.IsNotNull(target.GetThrownException(),
-                              string.Format("The function should've not thrown an exception, but it did.\n{0}", 
+                              string.Format("The function should've not thrown an exception, but it did.\n{0}",
                                             message)));
     }
 
@@ -29,7 +29,7 @@ namespace TestingTools.Extensions
     /// <param name="action">The action.</param>
     /// <param name="message">The message.</param>
     public static IVerifiable<Action> ThrowsException(
-      this IAssertion<Action> action, 
+      this IAssertion<Action> action,
       string message = "")
     {
       return new Verifiable<Action>(action, target =>
@@ -45,14 +45,14 @@ namespace TestingTools.Extensions
     /// <param name="function">The function.</param>
     /// <param name="message">The message.</param>
     public static IVerifiable<Func<T>> DoesNotThrowException<T>(
-      this IAssertion<Func<T>> function, 
+      this IAssertion<Func<T>> function,
       string message = "")
     {
       return new Verifiable<Func<T>>(function, target =>
               Assert.IsNull(
                   target.GetThrownException(),
                   string.Format(
-                    "The function should've not thrown an exception, but it did.\n{0}", 
+                    "The function should've not thrown an exception, but it did.\n{0}",
                     message)));
     }
 
@@ -62,7 +62,7 @@ namespace TestingTools.Extensions
     /// <param name="action">The action.</param>
     /// <param name="message">The message.</param>
     public static IVerifiable<Action> DoesNotThrowException(
-      this IAssertion<Action> action, 
+      this IAssertion<Action> action,
       string message = "")
     {
       return new Verifiable<Action>(action, target =>
@@ -92,8 +92,8 @@ namespace TestingTools.Extensions
         target();
         string actualWritten = consoleOut.ToString();
         Console.SetOut(Console.Out);
-        Assert.AreEqual(actualWritten, 
-                        expectedWritten, 
+        Assert.AreEqual(actualWritten,
+                        expectedWritten,
                         message);
       });
     }
@@ -145,8 +145,8 @@ namespace TestingTools.Extensions
         target();
         string actualWritten = consoleOut.ToString();
         Console.SetOut(Console.Out);
-        Assert.That(actualWritten, 
-                    Is.StringContaining(expectedWritten), 
+        Assert.That(actualWritten,
+                    Is.StringContaining(expectedWritten),
                     message);
       });
     }
