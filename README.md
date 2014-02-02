@@ -1,4 +1,4 @@
-## What is it?
+## What is NVerify?
 This project is a simple library to wrap the NUnit (extensible to MSTest) assertion libraries
 in order to provide an expressive API for declaring unit-test assertions.
 
@@ -33,7 +33,7 @@ You can also install it from the command line: `c:\project\dir\path> nuget insta
 ## Usage
 This tool is meant to be used in the **Arrange/Act/Assert** pattern, like in the following example:
 `````csharp
-using TestingTools;
+using NVerify;
 using NUnit.Framework;
 
 [Fixture]

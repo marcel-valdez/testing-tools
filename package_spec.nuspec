@@ -2,8 +2,8 @@
 <package >
   <metadata>
     <id>TestingTools</id>
-    <version>0.1.3.1</version>
-    <title>Testing Tools</title>
+    <version>0.1.3.2</version>
+    <title>NVerify</title>
     <authors>Marcel Valdez</authors>
     <owners>Marcel Valdez</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -11,10 +11,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Extensions over NUnit to write fluent assertions with the Arrange-Act-Assert pattern.</description>
     <releaseNotes>
+    v0.1.3.2
+    - Changed name to NVerify
+
     v0.1.3.1
     - Removed unnecessary references
     - Improved code base
-    
+
     v0.1.3
     - Improved usability by only requiring to import one namespace: using TestingTools
     - Improved code formatting
